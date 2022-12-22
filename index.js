@@ -4,7 +4,7 @@ mongoose.Promise = require("bluebird");
 
 const app = express();
 var bodyParser = require("body-parser");
-
+console.log("saddas");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 var cors = require("cors");
