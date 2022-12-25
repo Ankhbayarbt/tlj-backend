@@ -21,6 +21,7 @@ var productSchema = new mongoose.Schema({
   description: String,
   price: Number,
   button: String,
+  count: Number,
 });
 
 // the schema is useless so far
