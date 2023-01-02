@@ -34,4 +34,31 @@ app.get("/product/count", async function (req, res) {
   const data = await Product.find().where("count").gt(0);
   return res.status(200).send(data);
 });
+app.put("/product/plus/:id", async function (req, res) {
+  const id = req.params.id;
+  const prevData = await Product.find({ id: id });
+  let prevCount = prevData[0].count;
+  const data = await Product.find({ id: id }).updateOne({
+    count: prevCount + 1,
+  });
+  return res.status(200).send(data);
+});
+
+app.put("/product/minus/:id", async function (req, res) {
+  const id = req.params.id;
+  const prevData = await Product.find({ id: id });
+  let prevCount = prevData[0].count;
+  if (prevCount > 0) {
+    const data = await Product.find({ id: id }).updateOne({
+      count: prevCount - 1,
+    });
+    return res.status(200).send(data);
+  }
+  return res.status(200).send({ error: "count equal 0" });
+});
+
+app.put("/product/clean", async (req, res) => {
+  const data = await Product.find().updateMany({ count: 0 });
+  return res.status(200).send(data);
+});
 app.listen(3001);
